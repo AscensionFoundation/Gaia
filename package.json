@@ -1,0 +1,22 @@
+{
+  "name": "Gaia",
+  "version": "0.0.0",
+  "description": "Global data visualization website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AscensionFoundation/Gaia.git"
+  },
+  "author": "",
+  "license": "Private",
+  "bugs": {
+    "url": "https://github.com/AscensionFoundation/Gaia/issues"
+  },
+  "homepage": "http://ascension.foundation",
+  "dependencies": {
+    "express": "~4.12.3"
+  }
+}
