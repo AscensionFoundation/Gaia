@@ -1,0 +1,74 @@
+module.exports = function( grunt ) {
+
+	// intitial configuration
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
+
+		concat: {
+			build: {
+				dest:	'../build/Orb.js',
+				src:	[
+					'../src/Orb.js',
+					'../src/core/**/*.js',
+					'../src/**/*.js'
+				]
+			}
+		},
+
+		uglify: {
+			options: {
+				banner: '/*! Orb.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+			},
+			build: {
+				dest:	'../build/Orb.min.js',
+				src:	'../build/Orb.js'
+			}
+		},
+
+		watch: {
+			//files: ['<%= jshint.files %>'],
+			files: ['<%= concat.build.src %>', '../src/constants/*', '!../src/constants/Constants.g.js'],
+			tasks: ['filesToJavascript', 'concat', /*'babel',*/ 'uglify', 'copy', 'play:complete']
+		},
+
+		copy: {
+			main: {
+				src: '../build/*',
+				dest: '../examples/orb/'
+			}
+		},
+
+		filesToJavascript: {
+			default_options: {
+				options: {
+					inputFilesFolder : '../src/constants',
+					inputFileExtension : '.var',
+					useIndexes : true,
+					variableIndexMap : {
+					    'vs-' : "'Vertex'",
+					    'fs-' : "'Fragment'",
+					},
+					outputBaseFile : '../src/constants/Constants.g',
+					outputBaseFileVariable : 'orb.Constants',
+					outputFile : '../src/constants/Constants.g.js',
+				}
+			}
+		},
+
+    	play: {
+			complete: {
+				file: './complete.wav'
+			}
+		}
+	});
+
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-play');
+	grunt.loadNpmTasks('grunt-browserify');
+	grunt.loadNpmTasks('grunt-react');
+
+	grunt.registerTask('default', ['filesToJavascript', 'concat', /*'babel',*/ 'uglify', 'copy']);
+};
